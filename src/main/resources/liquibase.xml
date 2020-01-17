@@ -1,0 +1,34 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+   http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="202001071921" author="Apoorva" context="POC">
+        <preConditions>
+            <not>
+                <tableExists tableName="consent_request" />
+            </not>
+        </preConditions>
+        <comment>Add Consent Request table</comment>
+
+        <createTable tableName="consent_request">
+            <column name="id" autoIncrement="true" type="BIGINT">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="consent_request_id" type="VARCHAR(50)">
+                <constraints nullable="false" />
+            </column>
+            <column name="consent_request_details" type="JSON">
+                <constraints nullable="false" />
+            </column>
+            <column name="timestamp" type="DATETIME" defaultValueDate="CURRENT_TIMESTAMP">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
