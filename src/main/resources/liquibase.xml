@@ -7,7 +7,7 @@
    http://www.liquibase.org/xml/ns/dbchangelog
    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-    <changeSet id="202001071921" author="Apoorva" context="POC">
+    <changeSet id="202001201730" author="Apoorva" context="POC">
         <preConditions>
             <not>
                 <tableExists tableName="consent_request" />
@@ -19,10 +19,7 @@
             <column name="id" autoIncrement="true" type="BIGINT">
                 <constraints primaryKey="true" />
             </column>
-            <column name="consent_request_id" type="VARCHAR(50)">
-                <constraints nullable="false" />
-            </column>
-            <column name="consent_request_details" type="JSON">
+            <column name="consent_request" type="JSON">
                 <constraints nullable="false" />
             </column>
             <column name="timestamp" type="DATETIME" defaultValueDate="CURRENT_TIMESTAMP">
