@@ -49,4 +49,31 @@
         </createTable>
     </changeSet>
 
+    <changeSet id="202002061632" author="Chethan" context="POC">
+        <renameColumn newColumnName="date_created"
+                      oldColumnName="timestamp"
+                      tableName="consent_artefact"/>
+    </changeSet>
+
+    <changeSet id="202002061633" author="Chethan" context="POC">
+        <addColumn tableName="consent_artefact">
+            <column name="status" type="VARCHAR(20)">
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="202002061634" author="Chethan" context="POC">
+        <addColumn tableName="consent_artefact">
+            <column name="date_modified" type="DATETIME" defaultValueDate="CURRENT_TIMESTAMP">
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="202002061635" author="Chethan" context="POC">
+        <addColumn tableName="consent_artefact">
+            <column name="consent_artefact_id" type="VARCHAR(50)">
+            </column>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>
