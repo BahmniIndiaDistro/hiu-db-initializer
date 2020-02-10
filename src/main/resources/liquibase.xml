@@ -100,4 +100,15 @@
         </createTable>
     </changeSet>
 
+    <changeSet id="202002101431" author="Chethan" context="POC">
+        <addColumn tableName="consent_artefact">
+            <column name="consent_request_id" type="VARCHAR(50)">
+            </column>
+        </addColumn>
+        <createIndex indexName="idx_ca_request_id"
+                     tableName="consent_artefact">
+            <column name="consent_request_id"/>
+        </createIndex>
+    </changeSet>
+
 </databaseChangeLog>
