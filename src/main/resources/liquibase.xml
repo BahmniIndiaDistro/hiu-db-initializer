@@ -133,4 +133,11 @@
             </column>
         </createTable>
     </changeSet>
+
+    <changeSet id="202002281431" author="Ganesan" context="POC">
+        <createIndex indexName="idx_cr_request_id"
+                     tableName="consent_request">
+            <column name="((consent_request->>'requesterId'))" />
+        </createIndex>
+    </changeSet>
 </databaseChangeLog>
