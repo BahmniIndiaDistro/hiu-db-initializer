@@ -162,7 +162,7 @@
             <column name="transaction_id" type="VARCHAR(50)">
                 <constraints nullable="false" />
             </column>
-            <column name="part_numbero" type="VARCHAR(50)">
+            <column name="part_number" type="VARCHAR(50)">
                 <constraints nullable="false" />
             </column>
             <column name="date_created" type="DATETIME" defaultValueDate="CURRENT_TIMESTAMP">
@@ -195,7 +195,7 @@
 
     <changeSet id="202002271420" author="Apoorva" context="POC">
         <addColumn tableName="health_information">
-            <column name="data_flow_part_id" type="VARCHAR(50)">
+            <column name="part_number" type="VARCHAR(50)">
             </column>
         </addColumn>
     </changeSet>
