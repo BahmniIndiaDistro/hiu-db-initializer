@@ -134,6 +134,35 @@
         </createTable>
     </changeSet>
 
+    <changeSet id="202002170335" author="neeraj" context="POC">
+        <preConditions>
+            <not>
+                <tableExists tableName="data_flow_request_keys" />
+            </not>
+        </preConditions>
+        <comment>Add data flow request encryption keys</comment>
+        <createTable tableName="data_flow_request_keys">
+            <column name="id" autoIncrement="true" type="BIGINT">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="transaction_id" type="VARCHAR(50)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="key_pairs" type="JSON">
+                <constraints nullable="false" />
+            </column>
+            <column name="timestamp" type="DATETIME" defaultValueDate="CURRENT_TIMESTAMP">
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="202002281431" author="Ganesan" context="POC">
+        <createIndex indexName="idx_cr_request_id"
+                     tableName="consent_request">
+            <column name="((consent_request->>'requesterId'))" />
+        </createIndex>
+    </changeSet>
+
     <changeSet id="202002271411" author="Apoorva" context="POC">
         <addColumn tableName="data_flow_request">
             <column name="consent_artefact_id" type="VARCHAR(50)">

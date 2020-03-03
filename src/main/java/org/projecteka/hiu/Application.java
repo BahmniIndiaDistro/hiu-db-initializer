@@ -14,11 +14,9 @@ import java.sql.DriverManager;
 public class Application {
     public static void main(String[] args) {
         System.out.println("Creating schema for health information user");
-        java.sql.Connection connection = null;
-        Database database = null;
         try {
-            connection = openConnection(); //your openConnection logic here
-            database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(connection));
+            Connection connection = openConnection();
+            Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(connection));
             Liquibase liquibase = new liquibase.Liquibase("liquibase.xml", new ClassLoaderResourceAccessor(), database);
             liquibase.update(new Contexts(), new LabelExpression());
         } catch (Exception e) {
