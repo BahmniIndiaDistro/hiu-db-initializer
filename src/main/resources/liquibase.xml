@@ -162,4 +162,78 @@
             <column name="((consent_request->>'requesterId'))" />
         </createIndex>
     </changeSet>
+
+    <changeSet id="202002271411" author="Apoorva" context="POC">
+        <addColumn tableName="data_flow_request">
+            <column name="consent_artefact_id" type="VARCHAR(50)">
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="202002271413" author="Apoorva" context="POC">
+        <renameColumn newColumnName="date_created"
+                      oldColumnName="timestamp"
+                      tableName="data_flow_request"/>
+    </changeSet>
+
+    <changeSet id="202002271416" author="Apoorva" context="POC">
+        <preConditions>
+            <not>
+                <tableExists tableName="data_flow_parts" />
+            </not>
+        </preConditions>
+        <comment>Add data_flow_parts table</comment>
+
+        <createTable tableName="data_flow_parts">
+            <column name="id" autoIncrement="true" type="BIGINT">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="transaction_id" type="VARCHAR(50)">
+                <constraints nullable="false" />
+            </column>
+            <column name="part_number" type="VARCHAR(50)">
+                <constraints nullable="false" />
+            </column>
+            <column name="date_created" type="DATETIME" defaultValueDate="CURRENT_TIMESTAMP">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="202002271425" author="Apoorva" context="POC">
+        <dropColumn tableName="health_information">
+            <column name="health_information" type="JSON">
+            </column>
+        </dropColumn>
+    </changeSet>
+
+    <changeSet id="202002271630" author="Apoorva" context="POC">
+        <renameColumn newColumnName="old_transaction_id"
+                      oldColumnName="transaction_id"
+                      tableName="health_information"/>
+        <addColumn tableName="health_information">
+            <column name="transaction_id" type="VARCHAR(50)">
+            </column>
+        </addColumn>
+        <sql>UPDATE health_information SET transaction_id = old_transaction_id</sql>
+        <dropColumn tableName="health_information">
+            <column name="old_transaction_id" type="VARCHAR(50)">
+            </column>
+        </dropColumn>
+    </changeSet>
+
+    <changeSet id="202002271420" author="Apoorva" context="POC">
+        <addColumn tableName="health_information">
+            <column name="part_number" type="VARCHAR(50)">
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="202002271422" author="Apoorva" context="POC">
+        <addColumn tableName="health_information">
+            <column name="data" type="VARCHAR">
+            </column>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>
