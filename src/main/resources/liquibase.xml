@@ -236,4 +236,24 @@
         </addColumn>
     </changeSet>
 
+    <changeSet id="202003051555" author="Apoorva" context="POC">
+        <addColumn tableName="health_information">
+            <column name="status" type="VARCHAR(20)">
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="202003051733" author="Apoorva" context="POC">
+        <addColumn tableName="data_flow_parts">
+            <column name="status" type="VARCHAR(20)">
+            </column>
+        </addColumn>
+        <addColumn tableName="data_flow_parts">
+            <column name="errors" type="VARCHAR">
+            </column>
+        </addColumn>
+    </changeSet>
+
+
+
 </databaseChangeLog>
