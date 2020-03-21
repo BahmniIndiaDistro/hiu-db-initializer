@@ -254,6 +254,48 @@
         </addColumn>
     </changeSet>
 
+    <changeSet id="202003211459" author="Angshu" context="POC">
+        <addColumn tableName="consent_request">
+            <column name="consent_request_id" type="VARCHAR(50)">
+            </column>
+        </addColumn>
+    </changeSet>
 
+    <changeSet id="202003211503" author="Angshu" context="POC">
+        <createIndex tableName="consent_request" indexName="idx_consent_request_consent_request_id">
+            <column name="consent_request_id"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="202003211505" author="Angshu" context="POC">
+        <createIndex tableName="consent_artefact" indexName="idx_consent_artefact_consent_artefact_id">
+            <column name="consent_artefact_id"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="202003211507" author="Angshu" context="POC">
+        <createIndex tableName="data_flow_request" indexName="idx_data_flow_request_consent_artefact_id">
+            <column name="consent_artefact_id"/>
+        </createIndex>
+        <createIndex tableName="data_flow_request" indexName="idx_data_flow_request_transaction_id">
+            <column name="transaction_id"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="202003211509" author="Angshu" context="POC">
+        <createIndex tableName="data_flow_parts" indexName="idx_data_flow_parts_transaction_id">
+            <column name="transaction_id"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="202003211520" author="Angshu" context="POC">
+        <createIndex tableName="health_information" indexName="idx_health_information_transaction_id">
+            <column name="transaction_id"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="202003211522" author="Angshu" context="POC">
+        <renameColumn newColumnName="date_created"  oldColumnName="timestamp" tableName="consent_request"/>
+    </changeSet>
 
 </databaseChangeLog>
