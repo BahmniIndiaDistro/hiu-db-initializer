@@ -1,29 +1,26 @@
 <databaseChangeLog
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
-   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
-   http://www.liquibase.org/xml/ns/dbchangelog
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
     <changeSet id="202001201730" author="Apoorva" context="POC">
         <preConditions>
             <not>
-                <tableExists tableName="consent_request" />
+                <tableExists tableName="consent_request"/>
             </not>
         </preConditions>
         <comment>Add Consent Request table</comment>
 
         <createTable tableName="consent_request">
             <column name="id" autoIncrement="true" type="BIGINT">
-                <constraints primaryKey="true" />
+                <constraints primaryKey="true"/>
             </column>
             <column name="consent_request" type="JSON">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
             <column name="timestamp" type="DATETIME" defaultValueDate="CURRENT_TIMESTAMP">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
         </createTable>
     </changeSet>
@@ -31,20 +28,20 @@
     <changeSet id="202001310157" author="Chethan" context="POC">
         <preConditions>
             <not>
-                <tableExists tableName="consent_artefact" />
+                <tableExists tableName="consent_artefact"/>
             </not>
         </preConditions>
         <comment>Add Consent Artefact table</comment>
 
         <createTable tableName="consent_artefact">
             <column name="id" autoIncrement="true" type="BIGINT">
-                <constraints primaryKey="true" />
+                <constraints primaryKey="true"/>
             </column>
             <column name="consent_artefact" type="JSON">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
             <column name="timestamp" type="DATETIME" defaultValueDate="CURRENT_TIMESTAMP">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
         </createTable>
     </changeSet>
@@ -79,23 +76,23 @@
     <changeSet id="202002061212" author="apoorva" context="POC">
         <preConditions>
             <not>
-                <tableExists tableName="data_flow_request" />
+                <tableExists tableName="data_flow_request"/>
             </not>
         </preConditions>
         <comment>Add data_flow_request table</comment>
 
         <createTable tableName="data_flow_request">
             <column name="id" autoIncrement="true" type="BIGINT">
-                <constraints primaryKey="true" />
+                <constraints primaryKey="true"/>
             </column>
             <column name="transaction_id" type="VARCHAR(50)">
                 <constraints nullable="false" unique="true"/>
             </column>
             <column name="data_flow_request" type="JSON">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
             <column name="timestamp" type="DATETIME" defaultValueDate="CURRENT_TIMESTAMP">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
         </createTable>
     </changeSet>
@@ -114,22 +111,22 @@
     <changeSet id="202002191145" author="Chethan" context="POC">
         <preConditions>
             <not>
-                <tableExists tableName="health_information" />
+                <tableExists tableName="health_information"/>
             </not>
         </preConditions>
         <comment>Add health_information table</comment>
         <createTable tableName="health_information">
             <column name="id" autoIncrement="true" type="BIGINT">
-                <constraints primaryKey="true" />
+                <constraints primaryKey="true"/>
             </column>
             <column name="transaction_id" type="VARCHAR(50)">
                 <constraints nullable="false" unique="true"/>
             </column>
             <column name="health_information" type="JSON">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
             <column name="date_created" type="DATETIME" defaultValueDate="CURRENT_TIMESTAMP">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
         </createTable>
     </changeSet>
@@ -159,7 +156,7 @@
     <changeSet id="202002281431" author="Ganesan" context="POC">
         <createIndex indexName="idx_cr_request_id"
                      tableName="consent_request">
-            <column name="((consent_request->>'requesterId'))" />
+            <column name="((consent_request->>'requesterId'))"/>
         </createIndex>
     </changeSet>
 
@@ -298,4 +295,22 @@
         <renameColumn newColumnName="date_created"  oldColumnName="timestamp" tableName="consent_request"/>
     </changeSet>
 
+    <changeSet id="202003211145" author="Ganesan" context="POC">
+        <preConditions>
+            <not>
+                <tableExists tableName="user"/>
+            </not>
+        </preConditions>
+        <comment>Add health_information table</comment>
+        <createTable tableName="user">
+            <column name="username" type="VARCHAR(50)">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="password" type="VARCHAR(150)">
+            </column>
+            <column name="role" type="VARCHAR(10)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
 </databaseChangeLog>
