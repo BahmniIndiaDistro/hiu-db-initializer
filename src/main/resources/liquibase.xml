@@ -313,4 +313,10 @@
             </column>
         </createTable>
     </changeSet>
+
+    <changeSet id="202003211156" author="Dheeraj">
+        <addColumn tableName="user">
+            <column name="verified" type="boolean"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
