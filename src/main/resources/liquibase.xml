@@ -319,4 +319,20 @@
             <column name="verified" type="boolean"/>
         </addColumn>
     </changeSet>
+
+
+    <changeSet id="202006011124" author="Angshu, Mahenddra" context="POC">
+        <addColumn tableName="consent_request">
+            <column name="gateway_request_id" type="VARCHAR(50)">
+            </column>
+        </addColumn>
+        <createIndex indexName="idx_consent_request_gateway_request_id"
+                     tableName="consent_request">
+            <column name="gateway_request_id"/>
+        </createIndex>
+        <addColumn tableName="consent_request">
+            <column name="status" type="VARCHAR(20)">
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
