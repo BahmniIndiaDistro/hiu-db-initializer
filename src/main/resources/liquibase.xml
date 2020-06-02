@@ -320,7 +320,6 @@
         </addColumn>
     </changeSet>
 
-
     <changeSet id="202006011124" author="Angshu, Mahenddra" context="POC">
         <addColumn tableName="consent_request">
             <column name="gateway_request_id" type="VARCHAR(50)">
@@ -335,4 +334,11 @@
             </column>
         </addColumn>
     </changeSet>
+    <changeSet id="202006021435" author="Angshu" context="POC">
+        <addColumn tableName="consent_request">
+            <column name="date_modified" type="DATETIME">
+            </column>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>
