@@ -341,4 +341,18 @@
         </addColumn>
     </changeSet>
 
+    <changeSet id="202006182237" author="saisree" context="POC">
+        <addColumn tableName="data_flow_request">
+            <column name="request_id" type="VARCHAR(50)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="data_flow_request">
+            <column name="status" type="VARCHAR(50)" defaultValue="REQUEST_INITIATED">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <dropNotNullConstraint tableName="data_flow_request" columnName="transaction_id"/>
+    </changeSet>
+
 </databaseChangeLog>
