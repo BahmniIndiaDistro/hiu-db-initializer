@@ -414,4 +414,12 @@
             <column name="patient_consent_request_id"/>
         </createIndex>
     </changeSet>
+
+    <changeSet id="202006029834" author="Leela Prasanth" context="POC">
+        <addColumn tableName="patient_consent_request">
+            <column name="hip_id" type="VARCHAR(50)">
+            </column>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>
