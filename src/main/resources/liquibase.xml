@@ -355,7 +355,7 @@
         <dropNotNullConstraint tableName="data_flow_request" columnName="transaction_id"/>
     </changeSet>
 
-    <changeSet id="202931201730" author="Leela Prasanth" context="POC">
+    <changeSet id="202931201830" author="Leela Prasanth" context="POC">
         <preConditions>
             <not>
                 <tableExists tableName="patient_consent_request"/>
@@ -370,16 +370,21 @@
             <column name="patient_consent_request" type="JSON">
                 <constraints nullable="false"/>
             </column>
-            <column name="patient_consent_request_id" type="UUID">
+            <column name="data_request_id" type="UUID">
                 <constraints nullable="false"/>
             </column>
+
+            <column name="hip_id" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+
             <column name="date_created" type="DATETIME" defaultValueDate="timezone('utc'::text, now())">
                 <constraints nullable="false"/>
             </column>
         </createTable>
     </changeSet>
 
-    <changeSet id="202931201780" author="Leela Prasanth" context="POC">
+    <changeSet id="202931201789" author="Leela Prasanth" context="POC">
         <preConditions>
             <not>
                 <tableExists tableName="patient_consent_request_mapping"/>
@@ -391,7 +396,7 @@
             <column name="id" autoIncrement="true" type="BIGINT">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="patient_consent_request_id" type="UUID">
+            <column name="data_request_id" type="UUID">
                 <constraints nullable="false"/>
             </column>
             <column name="consent_request_id" type="UUID">
@@ -402,24 +407,17 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet id="202003211543" author="Leela Prasanth" context="POC">
+    <changeSet id="202003211567" author="Leela Prasanth" context="POC">
         <createIndex tableName="patient_consent_request_mapping"
                      indexName="idx_patient_consent_request_mapping_consent_request_id">
             <column name="consent_request_id"/>
         </createIndex>
     </changeSet>
-    <changeSet id="202003211549" author="Leela Prasanth" context="POC">
+    <changeSet id="202003211500" author="Leela Prasanth" context="POC">
         <createIndex tableName="patient_consent_request_mapping"
-                     indexName="idx_patient_consent_request_mapping_patient_consent_request_id">
-            <column name="patient_consent_request_id"/>
+                     indexName="idx_patient_consent_request_mapping_data_request_id">
+            <column name="data_request_id"/>
         </createIndex>
-    </changeSet>
-
-    <changeSet id="202006029834" author="Leela Prasanth" context="POC">
-        <addColumn tableName="patient_consent_request">
-            <column name="hip_id" type="VARCHAR(50)">
-            </column>
-        </addColumn>
     </changeSet>
 
 </databaseChangeLog>
