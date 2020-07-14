@@ -134,19 +134,19 @@
     <changeSet id="202002170335" author="neeraj" context="POC">
         <preConditions>
             <not>
-                <tableExists tableName="data_flow_request_keys" />
+                <tableExists tableName="data_flow_request_keys"/>
             </not>
         </preConditions>
         <comment>Add data flow request encryption keys</comment>
         <createTable tableName="data_flow_request_keys">
             <column name="id" autoIncrement="true" type="BIGINT">
-                <constraints primaryKey="true" />
+                <constraints primaryKey="true"/>
             </column>
             <column name="transaction_id" type="VARCHAR(50)">
                 <constraints nullable="false" unique="true"/>
             </column>
             <column name="key_pairs" type="JSON">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
             <column name="timestamp" type="DATETIME" defaultValueDate="CURRENT_TIMESTAMP">
             </column>
@@ -176,23 +176,23 @@
     <changeSet id="202002271416" author="Apoorva" context="POC">
         <preConditions>
             <not>
-                <tableExists tableName="data_flow_parts" />
+                <tableExists tableName="data_flow_parts"/>
             </not>
         </preConditions>
         <comment>Add data_flow_parts table</comment>
 
         <createTable tableName="data_flow_parts">
             <column name="id" autoIncrement="true" type="BIGINT">
-                <constraints primaryKey="true" />
+                <constraints primaryKey="true"/>
             </column>
             <column name="transaction_id" type="VARCHAR(50)">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
             <column name="part_number" type="VARCHAR(50)">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
             <column name="date_created" type="DATETIME" defaultValueDate="CURRENT_TIMESTAMP">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
         </createTable>
     </changeSet>
@@ -292,7 +292,7 @@
     </changeSet>
 
     <changeSet id="202003211522" author="Angshu" context="POC">
-        <renameColumn newColumnName="date_created"  oldColumnName="timestamp" tableName="consent_request"/>
+        <renameColumn newColumnName="date_created" oldColumnName="timestamp" tableName="consent_request"/>
     </changeSet>
 
     <changeSet id="202003211145" author="Ganesan" context="POC">
@@ -353,6 +353,71 @@
             </column>
         </addColumn>
         <dropNotNullConstraint tableName="data_flow_request" columnName="transaction_id"/>
+    </changeSet>
+
+    <changeSet id="202931201830" author="Leela Prasanth" context="POC">
+        <preConditions>
+            <not>
+                <tableExists tableName="patient_consent_request"/>
+            </not>
+        </preConditions>
+        <comment>Add Patient Consent Request table</comment>
+
+        <createTable tableName="patient_consent_request">
+            <column name="id" autoIncrement="true" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="patient_consent_request" type="JSON">
+                <constraints nullable="false"/>
+            </column>
+            <column name="data_request_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="hip_id" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="date_created" type="DATETIME" defaultValueDate="timezone('utc'::text, now())">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="202931201789" author="Leela Prasanth" context="POC">
+        <preConditions>
+            <not>
+                <tableExists tableName="patient_consent_request_mapping"/>
+            </not>
+        </preConditions>
+        <comment>Add Patient Consent Request Mapping table</comment>
+
+        <createTable tableName="patient_consent_request_mapping">
+            <column name="id" autoIncrement="true" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="data_request_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="consent_request_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_created" type="DATETIME" defaultValueDate="timezone('utc'::text, now())">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="202003211567" author="Leela Prasanth" context="POC">
+        <createIndex tableName="patient_consent_request_mapping"
+                     indexName="idx_patient_consent_request_mapping_consent_request_id">
+            <column name="consent_request_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="202003211500" author="Leela Prasanth" context="POC">
+        <createIndex tableName="patient_consent_request_mapping"
+                     indexName="idx_patient_consent_request_mapping_data_request_id">
+            <column name="data_request_id"/>
+        </createIndex>
     </changeSet>
 
 </databaseChangeLog>
