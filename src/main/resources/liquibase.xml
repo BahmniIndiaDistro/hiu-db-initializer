@@ -420,4 +420,36 @@
         </createIndex>
     </changeSet>
 
+    <changeSet id="202002271492" author="Leela Prasanth" context="POC">
+        <dropColumn tableName="patient_consent_request">
+            <column name="patient_consent_request" type="JSON">
+            </column>
+        </dropColumn>
+    </changeSet>
+
+    <changeSet id="202002271499" author="Leela Prasanth" context="POC">
+        <dropTable tableName="patient_consent_request_mapping"/>
+    </changeSet>
+
+    <changeSet id="202002271405" author="Leela Prasanth" context="POC">
+        <addColumn tableName="patient_consent_request">
+            <column name="consent_request_id" type="UUID">
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="202002271402" author="Leela Prasanth" context="POC">
+        <addColumn tableName="patient_consent_request">
+            <column name="date_modified" type="DATETIME">
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="202003211589" author="Leela Prasanth" context="POC">
+        <createIndex tableName="patient_consent_request"
+                     indexName="idx_patient_consent_request_consent_request_id">
+            <column name="consent_request_id"/>
+        </createIndex>
+    </changeSet>
+
 </databaseChangeLog>
