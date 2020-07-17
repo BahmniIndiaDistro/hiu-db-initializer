@@ -452,4 +452,18 @@
         </createIndex>
     </changeSet>
 
+    <changeSet id="202007162134" author="Angshu" context="POC">
+        <addColumn tableName="health_information">
+            <column name="latest_res_date" type="DATETIME">
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="202007162145" author="Angshu" context="POC">
+        <addColumn tableName="data_flow_parts">
+            <column name="latest_res_date" type="DATETIME">
+            </column>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>
