@@ -466,4 +466,12 @@
         </addColumn>
     </changeSet>
 
+    <changeSet id="202002271454" author="Leela Prasanth" context="POC">
+        <addColumn tableName="patient_consent_request">
+            <column name="patient_id" type="VARCHAR(50)">
+
+            </column>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>
