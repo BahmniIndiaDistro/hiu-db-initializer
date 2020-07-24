@@ -413,9 +413,9 @@
             <column name="consent_request_id"/>
         </createIndex>
     </changeSet>
-    <changeSet id="202003211500" author="Leela Prasanth" context="POC">
-        <createIndex tableName="patient_consent_request_mapping"
-                     indexName="idx_patient_consent_request_mapping_data_request_id">
+    <changeSet id="202003211539" author="Leela Prasanth" context="POC">
+        <createIndex tableName="patient_consent_request"
+                     indexName="idx_patient_consent_request_data_request_id">
             <column name="data_request_id"/>
         </createIndex>
     </changeSet>
