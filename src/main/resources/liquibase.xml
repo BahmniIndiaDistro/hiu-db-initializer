@@ -473,4 +473,11 @@
         </addColumn>
     </changeSet>
 
+    <changeSet id="202008082038" author="Angshu" context="v1">
+        <addColumn tableName="health_information">
+            <column name="care_context_reference" type="VARCHAR(50)">
+            </column>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>
