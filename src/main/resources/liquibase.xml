@@ -480,4 +480,19 @@
         </addColumn>
     </changeSet>
 
+    <changeSet id="202010141432" author="Angshu" context="v1">
+        <addColumn tableName="health_information">
+            <column name="doc_id" type="VARCHAR(50)">
+            </column>
+        </addColumn>
+        <addColumn tableName="health_information">
+            <column name="doc_type" type="VARCHAR(20)">
+            </column>
+        </addColumn>
+        <addColumn tableName="health_information">
+            <column name="doc_source" type="VARCHAR(50)">
+            </column>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>
