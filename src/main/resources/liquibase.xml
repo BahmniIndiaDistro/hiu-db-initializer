@@ -494,5 +494,10 @@
             </column>
         </addColumn>
     </changeSet>
+    <changeSet id="202010211437" author="Angshu" context="health_locker">
+        <renameColumn newColumnName="doc_origin"
+                      oldColumnName="doc_source"
+                      tableName="health_information"/>
+    </changeSet>
 
 </databaseChangeLog>
