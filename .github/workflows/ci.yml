@@ -19,4 +19,5 @@ jobs:
         env:
           DOCKER_REGISTRY_URL: docker.io
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        run: mvn compile jib:build -Djib.to.auth.username=projecteka -Djib.to.auth.password=${DOCKER_PASSWORD}
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        run: mvn compile jib:build -Djib.to.auth.username=${DOCKER_USERNAME} -Djib.to.auth.password=${DOCKER_PASSWORD}
