@@ -64,7 +64,7 @@
                 <version>2.4.0</version>
                 <configuration>
                     <to>
-                        <image>bahmnicovid19/hiu-db-initializer</image>
+                        <image>bahmniindiadistro/hiu-db</image>
                     </to>
                 </configuration>
             </plugin>
