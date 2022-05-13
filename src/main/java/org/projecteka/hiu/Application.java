@@ -10,7 +10,11 @@ import liquibase.exception.DatabaseException;
 import liquibase.exception.LiquibaseException;
 import liquibase.resource.ClassLoaderResourceAccessor;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Application {
     public static void main(String[] args) {
@@ -35,7 +39,7 @@ public class Application {
     }
 
     private static boolean checkIfDBExits(Connection connection, String databaseName) throws SQLException {
-        PreparedStatement stmt = connection.prepareCall("SELECT FROM pg_database WHERE datname = ?", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        PreparedStatement stmt = connection.prepareStatement("SELECT FROM pg_database WHERE datname = ?", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         stmt.setString(1,databaseName);
         ResultSet rs = stmt.executeQuery();
         rs.last();
@@ -44,8 +48,7 @@ public class Application {
 
     private static void createDB(Connection connection, String databaseName) throws SQLException {
         if(checkIfDBExits(connection,databaseName)){
-            PreparedStatement stmt = connection.prepareStatement("CREATE DATABASE ?");
-            stmt.setString(1,databaseName);
+            PreparedStatement stmt = connection.prepareStatement("CREATE DATABASE " + databaseName);
             System.out.println("Creating database for health information user");
             stmt.executeUpdate();
         }
