@@ -6,24 +6,48 @@ import liquibase.Liquibase;
 import liquibase.database.Database;
 import liquibase.database.DatabaseFactory;
 import liquibase.database.jvm.JdbcConnection;
+import liquibase.exception.DatabaseException;
+import liquibase.exception.LiquibaseException;
 import liquibase.resource.ClassLoaderResourceAccessor;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
 public class Application {
     public static void main(String[] args) {
         System.out.println("Connecting...");
         try {
             Connection connection = openConnection();
-            Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(connection));
+            Database database = getDatabaseConnection(connection);
             System.out.println("Creating schema for health information user");
-            Liquibase liquibase = new liquibase.Liquibase("liquibase.xml", new ClassLoaderResourceAccessor(), database);
-            liquibase.update(new Contexts(), new LabelExpression());
+            runLiquibaseScript(database);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private static Database getDatabaseConnection(Connection connection) throws DatabaseException {
+        return DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(connection));
+    }
+
+    private static void runLiquibaseScript(Database database) throws LiquibaseException {
+        Liquibase liquibase = new liquibase.Liquibase("liquibase.xml", new ClassLoaderResourceAccessor(), database);
+        liquibase.update(new Contexts(), new LabelExpression());
+    }
+
+    private static boolean checkIfDBExits(Connection connection, String databaseName) throws SQLException {
+        PreparedStatement stmt = connection.prepareCall("SELECT FROM pg_database WHERE datname = ?", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        stmt.setString(1,databaseName);
+        ResultSet rs = stmt.executeQuery();
+        rs.last();
+        return rs.getRow() == 0;
+    }
+
+    private static void createDB(Connection connection, String databaseName) throws SQLException {
+        if(checkIfDBExits(connection,databaseName)){
+            PreparedStatement stmt = connection.prepareStatement("CREATE DATABASE ?");
+            stmt.setString(1,databaseName);
+            System.out.println("Creating database for health information user");
+            stmt.executeUpdate();
         }
     }
 
@@ -36,13 +60,7 @@ public class Application {
             throw new Exception("you must set jdbc.url, jdbc.username, jdbc.password as properties, either using -D option or setting as env");
         }
         Connection connection = DriverManager.getConnection(jdbcUrl, jdbcUsername, jdbcUserPwd);
-        Statement stmt = connection.createStatement( ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-        ResultSet rs = stmt.executeQuery(String.format("SELECT FROM pg_database WHERE datname = '%s'", jdbcDatabase));
-        rs.last();
-        if(rs.getRow() == 0){
-            System.out.println("Creating database for health information user");
-            stmt.executeUpdate(String.format("CREATE DATABASE %s", jdbcDatabase));
-        }
+        createDB(connection,jdbcDatabase);
         return DriverManager.getConnection(jdbcUrl.concat(jdbcDatabase), jdbcUsername, jdbcUserPwd);
     }
 
