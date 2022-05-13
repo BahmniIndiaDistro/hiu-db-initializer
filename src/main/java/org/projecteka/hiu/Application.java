@@ -39,7 +39,9 @@ public class Application {
     }
 
     private static boolean checkIfDBExits(Connection connection, String databaseName) throws SQLException {
-        PreparedStatement stmt = connection.prepareCall("SELECT FROM pg_database WHERE datname =" + databaseName, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        PreparedStatement stmt = connection.prepareCall("SELECT FROM pg_database WHERE datname = ? ", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        stmt.setString(1,databaseName);
+        System.out.println(" SELECT " + stmt.toString());
         ResultSet rs = stmt.executeQuery();
         rs.last();
         return rs.getRow() == 0;
@@ -49,6 +51,7 @@ public class Application {
         if(checkIfDBExits(connection,databaseName)){
             PreparedStatement stmt = connection.prepareStatement("CREATE DATABASE ? ");
             stmt.setString(1,databaseName);
+            System.out.println(" CREATE " + stmt.toString());
             System.out.println("Creating database for health information user");
             stmt.executeUpdate();
         }
