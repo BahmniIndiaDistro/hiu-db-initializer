@@ -44,6 +44,7 @@ public class Application {
         System.out.println(" SELECT " + stmt.toString());
         ResultSet rs = stmt.executeQuery();
         rs.last();
+        System.out.println("Result " + rs.getRow());
         return rs.getRow() == 0;
     }
 
