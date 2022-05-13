@@ -49,11 +49,11 @@ public class Application {
 
     private static void createDB(Connection connection, String databaseName) throws SQLException {
         if(checkIfDBExits(connection,databaseName)){
-            PreparedStatement stmt = connection.prepareStatement("CREATE DATABASE ? ");
-            stmt.setString(1,databaseName);
+            PreparedStatement stmt = connection.prepareStatement("CREATE DATABASE " + databaseName );
+            //stmt.setString(1,databaseName);
             System.out.println(" CREATE " + stmt.toString());
             System.out.println("Creating database for health information user");
-            stmt.executeQuery();
+            stmt.executeUpdate();
         }
     }
 
