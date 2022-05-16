@@ -21,4 +21,4 @@ jobs:
           DOCKER_REGISTRY_URL: docker.io
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-        run: mvn compile jib:build -Djib.to.auth.username=${DOCKER_USERNAME} -Djib.to.auth.password=${DOCKER_PASSWORD} -Dimage=${DOCKER_USERNAME}/hiu-db-initializer:${RELEASE_VERSION}
+        run: mvn compile jib:build -Djib.to.auth.username=${DOCKER_USERNAME} -Djib.to.auth.password=${DOCKER_PASSWORD} -Dimage=${DOCKER_USERNAME}/hiu-db:${RELEASE_VERSION}
