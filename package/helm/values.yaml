@@ -1,0 +1,18 @@
+replicaCount: 1
+
+metadata:
+  labels:
+    environment: dev
+
+image:
+  repository: bahmniindiadistro
+  name: hiu-db
+  tag: latest
+
+service:
+  type: ClusterIP
+  port: 8095
+
+
+autoscaling:
+  enabled: false

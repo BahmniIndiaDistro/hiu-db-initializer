@@ -2,22 +2,66 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ master ]
+    branches:
+     - master
+     - ABDM-Infra
   pull_request:
     branches: [ master ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      HELM_CHART_PATH: package/helm/
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 1.8
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
+      - name: Set env
+        run: |
+          APP_VERSION=$(cat .appversion)
+          echo "ARTIFACT_VERSION=$(echo $APP_VERSION-${{github.run_number}})" >> $GITHUB_ENV
       - name: Build with Maven
         env:
           DOCKER_REGISTRY_URL: docker.io
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-        run: mvn compile jib:build -Djib.to.auth.username=${DOCKER_USERNAME} -Djib.to.auth.password=${DOCKER_PASSWORD}
+        run: mvn compile jib:build -Djib.to.auth.username=${DOCKER_USERNAME} -Djib.to.auth.password=${DOCKER_PASSWORD} -Djib.to.tags=$ARTIFACT_VERSION,latest
+      - name: Helm - Update Version and Image Tag
+        run: |
+          yq --inplace '.image.tag = "${{ env.ARTIFACT_VERSION }}"' $HELM_CHART_PATH/values.yaml
+          yq --inplace '.version = "${{ env.ARTIFACT_VERSION }}"' $HELM_CHART_PATH/Chart.yaml
+
+      - name: Helm Lint
+        run: helm lint $HELM_CHART_PATH
+
+      - name: Helm Package
+        run: helm package $HELM_CHART_PATH
+
+      - name: Helm - Checkout Charts Repository
+        uses: actions/checkout@v2
+        with:
+          repository: Bahmniindiadistro/helm-charts
+          ref: gh-pages
+          path: helm-charts
+          persist-credentials: false
+
+      - name: Helm - Copy chart
+        run: mkdir -p helm-charts/hiu-db/ && cp hiu-db-${{ env.ARTIFACT_VERSION }}.tgz helm-charts/hiu-db/
+
+      - name: Helm - reIndex
+        working-directory: helm-charts/
+        run: helm repo index --merge index.yaml --url https://bahmniindiadistro.github.io/helm-charts/  .
+
+      - name: Helm - Publish Chart
+        working-directory: helm-charts/
+        run: |
+          git config user.name ${{ secrets.BAHMNI_USERNAME}}
+          git config user.email ${{ secrets.BAHMNI_EMAIL}}
+          git add .
+          git commit -m "Release of hiu-db-${{ env.ARTIFACT_VERSION }}"
+          git push 'https://${{ secrets.BAHMNI_USERNAME}}:${{ secrets.BAHMNI_PAT}}@github.com/bahmniindiadistro/helm-charts.git' gh-pages
+
+
