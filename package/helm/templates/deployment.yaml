@@ -24,7 +24,6 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}/{{ .Values.image.name }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-        - value: "{{ .Values.opts }}"
           ports:
             - containerPort: 8095
               protocol: TCP
@@ -32,9 +31,6 @@ spec:
             - configMapRef:
                 name: {{ .Chart.Name }}-config
                 optional: false
-            - secretRef:
-                 name: {{.Chart.Name }}-secrets
-                 optional: false
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       restartPolicy: Always
