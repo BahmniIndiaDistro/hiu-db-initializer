@@ -24,8 +24,9 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}/{{ .Values.image.name }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+        - value: "{{ .Values.opts }}"
           ports:
-            - containerPort: 8080
+            - containerPort: 8095
               protocol: TCP
           envFrom:
             - configMapRef:

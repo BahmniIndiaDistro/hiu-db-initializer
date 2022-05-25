@@ -13,6 +13,8 @@ service:
   type: ClusterIP
   port: 8095
 
+opts:  "JAVA_TOOL_OPTIONS=-Djdbc.url=jdbc:postgresql://db:5432/ -Djdbc.username=postgres -Djdbc.password=welcome -Djdbc.database=health_information_user"
+
 
 autoscaling:
   enabled: false
