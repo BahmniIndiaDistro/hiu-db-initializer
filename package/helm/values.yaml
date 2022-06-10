@@ -1,0 +1,20 @@
+replicaCount: 1
+
+metadata:
+  labels:
+    environment: dev
+
+image:
+  repository: bahmniindiadistro
+  name: hiu-db
+  tag: latest
+
+service:
+  type: ClusterIP
+  port: 8095
+
+config:
+  JAVA_TOOL_OPTIONS: "-Djdbc.url=jdbc:postgresql://bahmni-dev-postgresql:5432/ -Djdbc.username=postgres -Djdbc.password=welcome -Djdbc.database=health_information_user"
+
+autoscaling:
+  enabled: false

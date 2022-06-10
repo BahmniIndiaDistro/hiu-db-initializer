@@ -1,0 +1,5 @@
+apiVersion: v2
+name: hiu-db
+description: Helm chart for hiu-db
+type: application
+version: 1.0.0
