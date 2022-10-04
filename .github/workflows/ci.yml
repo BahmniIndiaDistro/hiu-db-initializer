@@ -4,11 +4,13 @@ on:
   push:
     branches:
      - master
-  pull_request:
-    branches: [ master ]
+     - 'release-*'
+    tags:
+     - '[0-9]+.[0-9]+.[0-9]+'
 
 jobs:
-  build:
+  build-publish-docker-helm:
+    name: Build & Publish Docker Image
     runs-on: ubuntu-latest
     env:
       HELM_CHART_PATH: package/helm/
@@ -18,10 +20,11 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-      - name: Set env
+      - name: Set env.ARTIFACT_VERSION
         run: |
-          APP_VERSION=$(cat .appversion)
-          echo "ARTIFACT_VERSION=$(echo $APP_VERSION-${{github.run_number}})" >> $GITHUB_ENV
+          wget -q https://raw.githubusercontent.com/Bahmni/bahmni-infra-utils/main/setArtifactVersion.sh && chmod +x setArtifactVersion.sh
+          ./setArtifactVersion.sh
+          rm setArtifactVersion.sh
       - name: Build with Maven
         env:
           DOCKER_REGISTRY_URL: docker.io
