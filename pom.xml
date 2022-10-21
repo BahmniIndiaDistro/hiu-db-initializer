@@ -63,6 +63,9 @@
                 <artifactId>jib-maven-plugin</artifactId>
                 <version>2.4.0</version>
                 <configuration>
+                    <from>
+                        <image>amazoncorretto:8</image>
+                    </from>
                     <to>
                         <image>bahmniindiadistro/hiu-db</image>
                     </to>
