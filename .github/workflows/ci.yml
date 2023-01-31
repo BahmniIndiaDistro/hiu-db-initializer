@@ -3,9 +3,8 @@ name: Java CI with Maven
 on:
   push:
     branches:
-     - BAH-2505
-    #  - master
-    #  - 'release-*'
+     - master
+     - 'release-*'
     tags:
      - '[0-9]+.[0-9]+.[0-9]+'
 
@@ -32,7 +31,6 @@ jobs:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         run: mvn compile jib:build -Djib.to.auth.username=${DOCKER_USERNAME} -Djib.to.auth.password=${DOCKER_PASSWORD} -Djib.to.tags=$ARTIFACT_VERSION,latest
-      # - run: docker manifest inspect bahmniindiadistro/hiu-db:latest
       - name: Helm - Update Version and Image Tag
         run: |
           yq --inplace '.image.tag = "${{ env.ARTIFACT_VERSION }}"' $HELM_CHART_PATH/values.yaml
