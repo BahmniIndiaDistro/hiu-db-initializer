@@ -3,9 +3,9 @@ name: Java CI with Maven
 on:
   push:
     branches:
+     - BAH-2505
     #  - master
     #  - 'release-*'
-     - BAH-2505
     tags:
      - '[0-9]+.[0-9]+.[0-9]+'
 
@@ -25,14 +25,14 @@ jobs:
         run: |
           wget -q https://raw.githubusercontent.com/Bahmni/bahmni-infra-utils/main/setArtifactVersion.sh && chmod +x setArtifactVersion.sh
           ./setArtifactVersion.sh
-          rm setArtifactVersion.sh
+          rm setArtifactVersion.sh  
       - name: Build with Maven
         env:
           DOCKER_REGISTRY_URL: docker.io
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         run: mvn compile jib:build -Djib.to.auth.username=${DOCKER_USERNAME} -Djib.to.auth.password=${DOCKER_PASSWORD} -Djib.to.tags=$ARTIFACT_VERSION,latest
-      - run: docker manifest inspect bahmniindiadistro/hiu-db:latest
+      # - run: docker manifest inspect bahmniindiadistro/hiu-db:latest
       - name: Helm - Update Version and Image Tag
         run: |
           yq --inplace '.image.tag = "${{ env.ARTIFACT_VERSION }}"' $HELM_CHART_PATH/values.yaml
