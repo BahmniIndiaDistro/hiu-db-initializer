@@ -24,7 +24,7 @@ jobs:
         run: |
           wget -q https://raw.githubusercontent.com/Bahmni/bahmni-infra-utils/main/setArtifactVersion.sh && chmod +x setArtifactVersion.sh
           ./setArtifactVersion.sh
-          rm setArtifactVersion.sh  
+          rm setArtifactVersion.sh
       - name: Build with Maven
         env:
           DOCKER_REGISTRY_URL: docker.io
