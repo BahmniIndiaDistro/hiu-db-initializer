@@ -499,5 +499,13 @@
                       oldColumnName="doc_source"
                       tableName="health_information"/>
     </changeSet>
+    <changeSet id="202308031213" author="Abinaya" context="health_locker">
+        <preConditions>
+                <tableExists tableName="health_information"/>
+                <columnExists tableName="health_information" columnName="doc_id"/>
+        </preConditions>
+        <comment>Update doc_id type in health_information table</comment>
+        <modifyDataType tableName="health_information" columnName="doc_id" newDataType="varchar(70)"/>
+    </changeSet>
 
 </databaseChangeLog>
