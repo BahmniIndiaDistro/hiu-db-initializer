@@ -64,7 +64,7 @@
                 <version>3.3.1</version>
                 <configuration>
                     <from>
-                        <image>amazoncorretto:8</image>
+                        <image>amazoncorretto:11</image>
                         <platforms>
                             <platform>
                                 <architecture>amd64</architecture>
