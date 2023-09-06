@@ -9,8 +9,8 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
     </properties>
     <dependencies>
         <dependency>
@@ -64,7 +64,7 @@
                 <version>3.3.1</version>
                 <configuration>
                     <from>
-                        <image>amazoncorretto:8</image>
+                        <image>amazoncorretto:11</image>
                         <platforms>
                             <platform>
                                 <architecture>amd64</architecture>
