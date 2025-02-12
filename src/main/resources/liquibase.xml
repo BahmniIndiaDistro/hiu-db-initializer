@@ -508,4 +508,19 @@
         <modifyDataType tableName="health_information" columnName="doc_id" newDataType="varchar(128)"/>
     </changeSet>
 
+    <changeSet id="202402111552" author="Mohan,Dev,Arshiya">
+        <preConditions>
+            <tableExists tableName="user"/>
+            <not>
+                <columnExists tableName="user" columnName="hpin"/>
+            </not>
+        </preConditions>
+        <comment>Add hpin column to user table</comment>
+        <addColumn tableName="user">
+            <column name="hpin" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>
